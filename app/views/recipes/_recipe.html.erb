@@ -2,5 +2,12 @@
   <%= image_tag recipe.image_url, size: "120x120" %>
   <h2><%= link_to_unless_current recipe.name, recipe %></h2>
   <%= simple_format recipe.description %>
-  <em>added by <%= link_to recipe.user.name, recipe.user %></em>
+  <em>
+  	added by <%= link_to recipe.user.name, recipe.user %>
+  	| <%= pluralize recipe.reputation_for(:votes).to_i, "vote" %>
+  	<% if current_user && !current_user.voted_for?(recipe) %>
+	  	| <%= link_to "up", vote_recipe_path(recipe, type: "up"), method: "post" %>
+	  	| <%= link_to "down", vote_recipe_path(recipe, type: "down"), method: "post" %>
+	<% end %>
+  </em>
 <% end %>

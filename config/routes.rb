@@ -12,5 +12,6 @@ Cookbook::Application.routes.draw do
   resources :activities
   resources :recipes do
     resources :comments
+    member {post :vote }
   end
 end
